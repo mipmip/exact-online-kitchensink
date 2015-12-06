@@ -1,0 +1,6 @@
+build
+tags
+.repl_history
+.dat.*
+.bundle
+tmp
