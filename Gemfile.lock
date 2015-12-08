@@ -1,4 +1,9 @@
 PATH
+  remote: /Users/pim/RnD/Gems/exact_online_apidoc_parser
+  specs:
+    exact_online_apidoc_parser (0.0.1)
+
+PATH
   remote: /Users/pim/RnD/Gems/exact_online_cli
   specs:
     exact_online_cli (0.0.1)
@@ -70,6 +75,7 @@ PLATFORMS
 DEPENDENCIES
   bubble-wrap (~> 1.9.4)
   elmas!
+  exact_online_apidoc_parser!
   exact_online_cli!
   motion-kit
   motion-kit-events

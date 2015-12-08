@@ -14,6 +14,8 @@ class MainWindowController < NSWindowController
 
     build_navigation
 
+    #NSApplication.sharedApplication.delegate.api_meta
+
     @outline_view = @layout.get(:outline_view)
     @outline_view.outlineTableColumn = @layout.outline_view_column
     @outline_view.delegate = self
