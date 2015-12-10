@@ -9,9 +9,8 @@ module KitchenSinkExamples
 
       prepare_views
 
-      @data = []
       @meta = NSApplication.sharedApplication.delegate.resource_meta(@end_point)
-      p @meta
+      @data = []
 
       sync_exact_data
 
@@ -39,7 +38,7 @@ module KitchenSinkExamples
     end
 
     def record_window
-      @record_window_controller ||= RecordWindowController.alloc.init
+      @record_window_controller ||= RecordWindowController.alloc.init_with_meta(@meta)
     end
 
     def add_record_window
@@ -98,6 +97,5 @@ module KitchenSinkExamples
 
     def tableViewColumnDidResize(notification)
     end
-
   end
 end

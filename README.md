@@ -17,4 +17,4 @@ Below a todo list in the shape of a roadmap.
 - [ ] new resource, abstract classes
 
 
-
+- [ ] manual data definition yaml file
