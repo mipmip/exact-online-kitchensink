@@ -9,6 +9,17 @@ Below a todo list in the shape of a roadmap.
 - [x] proto Interface
 - [x] proto sync
 - [x] cli api
+
+### Experiment with dynamic views and meta data
+- [x] creating buttons from meta data
+
+### Dynamic working forms
+- [x] basic inputs by meta type
+- [ ] data time
+- [ ] relational fields
+- [ ] saving
+
+### Next...
 - [ ] show hide fields
 - [ ] edit
 - [ ] add

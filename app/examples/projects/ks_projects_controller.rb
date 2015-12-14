@@ -35,16 +35,35 @@ module KitchenSinkExamples
       @add_button = @layout.get(:add_button)
       @add_button.target = self
       @add_button.action = 'add_record_window'
+
+      @edit_button = @layout.get(:edit_button)
+      @edit_button.target = self
+      @edit_button.action = 'edit_record_window'
     end
 
-    def record_window
-      @record_window_controller ||= RecordWindowController.alloc.init_with_meta(@meta)
+    def record_window(record_data=nil)
+      #p record_data
+      @record_window_controller ||= RecordWindowController.alloc.init_with_meta(@meta, record_data)
     end
 
     def add_record_window
       record_window
       @record_window_controller.showWindow(self)
       @record_window_controller.window.orderFrontRegardless
+    end
+
+    def edit_record_window
+       #[array objectAtIndex:[tableView selectedRow]];
+#      p @data[@table_view.selectedRow]
+      record_id = @data[@table_view.selectedRow]['id']
+      get_record_data(record_id)
+
+    #  while @edit_data.nil?
+    #    puts "func1 at: #{Time.now}"
+    #    sleep(1)
+    #  end
+
+
     end
 
     def sync_exact_data
@@ -71,6 +90,47 @@ module KitchenSinkExamples
       @table_view.reloadData
       NSNotificationCenter.defaultCenter.removeObserver(self, name: NSFileHandleReadToEndOfFileCompletionNotification, object: notification.object)
     end
+
+    def get_record_data(record_id)
+      @task_data2 = NSTask.alloc.init
+      @task_data2.setLaunchPath "/Users/pim/RnD/exact-online-kitchensink/bin/eo"
+      @task_data2.setCurrentDirectoryPath "/Users/pim/RnD/exact-online-kitchensink"
+      @task_data2.setArguments(['projects', 'jsonlist', '-f', "id=#{record_id}", '-C'])
+      #@task_data2.setArguments(['projects', 'jsonlist'])
+
+      print "\n/Users/pim/RnD/exact-online-kitchensink/bin/eo " + ['projects', 'jsonlist', '-f', "id=#{record_id}", '-C'].join(' ')
+      @outputPipe2 = NSPipe.pipe
+      @task_data2.setStandardOutput @outputPipe2
+
+      @notification_center2 = NSNotificationCenter.defaultCenter
+      @notification_center2.addObserver(self,
+                                       selector:'readCompletedDataGetRecord:',
+                                       name:NSFileHandleReadToEndOfFileCompletionNotification,
+                                       object:@outputPipe2.fileHandleForReading)
+
+      @outputPipe2.fileHandleForReading.readToEndOfFileInBackgroundAndNotify
+      @task_data2.launch
+    end
+
+    def readCompletedDataGetRecord(notification)
+      #p 'gallo'
+      #p notification
+      result = notification.userInfo.objectForKey(NSFileHandleNotificationDataItem)
+      #p result
+      #@edit_data = BW::JSON.parse result
+      ###p @edit_data
+
+#      @table_view.reloadData
+      @notification_center2.removeObserver(self, name: NSFileHandleReadToEndOfFileCompletionNotification, object: notification.object)
+
+      record_window BW::JSON.parse(result)
+
+      @record_window_controller.showWindow(self)
+      @record_window_controller.window.orderFrontRegardless
+
+
+    end
+
 
     def tableView(table_view, viewForTableColumn: column, row: row)
       text_field = table_view.makeViewWithIdentifier(column.identifier, owner: self)
