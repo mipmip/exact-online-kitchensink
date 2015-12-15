@@ -14,13 +14,10 @@ class MainWindowController < NSWindowController
 
     build_navigation
 
-    #NSApplication.sharedApplication.delegate.api_meta
-
     @outline_view = @layout.get(:outline_view)
     @outline_view.outlineTableColumn = @layout.outline_view_column
     @outline_view.delegate = self
     @outline_view.dataSource = self
-    #@outline_view.reloadData
   end
 
   def build_navigation
@@ -53,9 +50,7 @@ class MainWindowController < NSWindowController
       right_view = @layout.get(:right_view)
       selected_item['subview'].setFrame right_view.bounds
 
-
       @layout.set_right_sub_view selected_item['subview']
-    #  @layout.reapply!
     end
   end
 

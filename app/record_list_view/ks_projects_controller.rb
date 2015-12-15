@@ -42,7 +42,6 @@ module KitchenSinkExamples
     end
 
     def record_window(record_data=nil)
-      #p record_data
       @record_window_controller ||= RecordWindowController.alloc.init_with_meta(@meta, record_data)
     end
 
@@ -87,7 +86,6 @@ module KitchenSinkExamples
       @task_data2.setLaunchPath "/Users/pim/RnD/exact-online-kitchensink/bin/eo"
       @task_data2.setCurrentDirectoryPath "/Users/pim/RnD/exact-online-kitchensink"
       @task_data2.setArguments(['projects', 'jsonlist', '-f', "id=#{record_id}", '-C'])
-      #@task_data2.setArguments(['projects', 'jsonlist'])
 
       print "\n/Users/pim/RnD/exact-online-kitchensink/bin/eo " + ['projects', 'jsonlist', '-f', "id=#{record_id}", '-C'].join(' ')
       @outputPipe2 = NSPipe.pipe

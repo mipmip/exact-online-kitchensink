@@ -21,8 +21,8 @@ Below a todo list in the shape of a roadmap.
 - [ ] finish edit v1.0
 - [ ] saving
 
-
 ### Dynamic resource list
+- [x] rename directories
 - [ ] refactor remove all projects in files and classes
 - [ ] rename examples
 
@@ -34,8 +34,8 @@ Below a todo list in the shape of a roadmap.
 - [ ] add
 - [ ] filter knop
 - [ ] Add loading spinners
-- [ ] port and use Exact Online OSX API
 - [ ] new resource, abstract classes
-
+- [ ] move api call to capi class
 
 - [ ] manual data definition yaml file
+- [ ] port and use Exact Online OSX API
