@@ -68,7 +68,6 @@ module KitchenSinkExamples
 
     def readCompletedDataDeleteRecord(notification)
       sync_exact_data
-      p 'hal.lo'
     end
 
     def record_window(record_data=nil)

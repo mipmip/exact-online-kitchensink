@@ -5,13 +5,18 @@ class RecordWindowLayout < MK::WindowLayout
     @meta = meta
     @record_data = record_data
 
+    super()
     @used_types = ['Edm.String',
                    'Edm.Boolean',
                    'Edm.Int16',
                    'Edm.Int32',
                    'Edm.Double']
-    super()
 
+
+  end
+
+  def used_types
+    @used_types
   end
 
   def layout
@@ -73,7 +78,6 @@ class RecordWindowLayout < MK::WindowLayout
       right.equals(:superview, :right).minus(10)
       bottom.equals(:superview, :bottom).minus(10)
     end
-
   end
 
   def container_view_style
@@ -84,12 +88,12 @@ class RecordWindowLayout < MK::WindowLayout
     @last_y_pos = 40
     @meta['all_attributes'].each do | attr |
 
-      p attr
+  #    p attr
 
       if @used_types.include? attr['type']
 
         #LABEL
-        add NSTextField, attr['name'].to_sym do
+        add NSTextField, "#{attr['name']}_label".to_sym do
 
           editable false
           selectable false
@@ -151,12 +155,12 @@ class RecordWindowLayout < MK::WindowLayout
             end
           end
         else
-          p "No form handler found for:" + attr['type']
+#          p "No form handler found for:" + attr['type']
         end
 
       else
-        p "#{attr['name']}:#{attr['type']}"
-        p attr
+ #       p "#{attr['name']}:#{attr['type']}"
+  #      p attr
       end
 
 
