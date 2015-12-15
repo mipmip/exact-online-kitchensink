@@ -53,17 +53,8 @@ module KitchenSinkExamples
     end
 
     def edit_record_window
-       #[array objectAtIndex:[tableView selectedRow]];
-#      p @data[@table_view.selectedRow]
       record_id = @data[@table_view.selectedRow]['id']
       get_record_data(record_id)
-
-    #  while @edit_data.nil?
-    #    puts "func1 at: #{Time.now}"
-    #    sleep(1)
-    #  end
-
-
     end
 
     def sync_exact_data
@@ -113,22 +104,14 @@ module KitchenSinkExamples
     end
 
     def readCompletedDataGetRecord(notification)
-      #p 'gallo'
-      #p notification
       result = notification.userInfo.objectForKey(NSFileHandleNotificationDataItem)
-      #p result
-      #@edit_data = BW::JSON.parse result
-      ###p @edit_data
 
-#      @table_view.reloadData
       @notification_center2.removeObserver(self, name: NSFileHandleReadToEndOfFileCompletionNotification, object: notification.object)
 
       record_window BW::JSON.parse(result)
 
       @record_window_controller.showWindow(self)
       @record_window_controller.window.orderFrontRegardless
-
-
     end
 
 

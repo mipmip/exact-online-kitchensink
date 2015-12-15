@@ -53,6 +53,7 @@ class MainWindowController < NSWindowController
       right_view = @layout.get(:right_view)
       selected_item['subview'].setFrame right_view.bounds
 
+
       @layout.set_right_sub_view selected_item['subview']
     #  @layout.reapply!
     end

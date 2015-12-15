@@ -1,6 +1,12 @@
 class MainWindowLayout < MK::WindowLayout
   MAIN_WINDOW_IDENTIFIER = 'MAIN_WINDOW'
 
+  ## Needed to prevent collapsing left plane in splitview
+  def splitView(splitView, constrainMinCoordinate: proposedMinimumPosition, ofSubviewAt: dividerIndex)
+    return 100.0
+  end
+
+
   def layout
     frame [[100, 100], [480, 360]], 'WindowLayout'
 
@@ -8,25 +14,29 @@ class MainWindowLayout < MK::WindowLayout
 
     add NSSplitView, :split_view do
       frame v.superview.bounds
-      autoresizing_mask NSViewWidthSizable | NSViewHeightSizable
+#      autoresizing_mask NSViewWidthSizable | NSViewHeightSizable
       vertical true
+      delegate self
 
       add NSScrollView, :scroll_view_left do
         has_vertical_scroller true
-        frame v.superview.bounds
-        translatesAutoresizingMaskIntoConstraints
+#        frame v.superview.bounds
+        #translatesAutoresizingMaskIntoConstraints
         width 300
 
         document_view add NSOutlineView, :outline_view
       end
 
       @right_view = add NSView, :right_view do
-        frame v.superview.bounds
-        width v.superview.bounds.size.width - 300
+        #frame v.superview.bounds
+        width v.superview.bounds.size.width - 304
+#        width v.superview.bounds.size.width - 300
 
-        set_autoresizes_subviews true
+#        set_autoresizes_subviews true
 
       end
+
+      adjust_subviews
     end
   end
 
