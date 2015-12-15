@@ -36,9 +36,39 @@ module KitchenSinkExamples
       @add_button.target = self
       @add_button.action = 'add_record_window'
 
+      @delete_button = @layout.get(:delete_button)
+      @delete_button.target = self
+      @delete_button.action = 'delete_record'
+
       @edit_button = @layout.get(:edit_button)
       @edit_button.target = self
       @edit_button.action = 'edit_record_window'
+    end
+
+    def delete_record
+      record_id = @data[@table_view.selectedRow]['id']
+      @task_data3 = NSTask.alloc.init
+      @task_data3.setLaunchPath "/Users/pim/RnD/exact-online-kitchensink/bin/eo"
+      @task_data3.setCurrentDirectoryPath "/Users/pim/RnD/exact-online-kitchensink"
+      @task_data3.setArguments(['projects', 'delete', "#{record_id}"])
+
+      @outputPipe3 = NSPipe.pipe
+      @task_data3.setStandardOutput @outputPipe3
+
+      @notification_center3 = NSNotificationCenter.defaultCenter
+      @notification_center3.addObserver(self,
+                                        selector:'readCompletedDataDeleteRecord:',
+                                        name:NSFileHandleReadToEndOfFileCompletionNotification,
+                                        object:@outputPipe3.fileHandleForReading)
+
+      @outputPipe3.fileHandleForReading.readToEndOfFileInBackgroundAndNotify
+      @task_data3.launch
+
+    end
+
+    def readCompletedDataDeleteRecord(notification)
+      sync_exact_data
+      p 'hal.lo'
     end
 
     def record_window(record_data=nil)

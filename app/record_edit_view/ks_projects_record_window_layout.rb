@@ -79,9 +79,12 @@ class RecordWindowLayout < MK::WindowLayout
   def container_view_style
 
     frame v.superview.bounds
+    height 3000 # fix auto size to fit content
 
     @last_y_pos = 40
     @meta['all_attributes'].each do | attr |
+
+      p attr
 
       if @used_types.include? attr['type']
 

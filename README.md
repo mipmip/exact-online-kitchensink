@@ -5,7 +5,6 @@
 Below a todo list in the shape of a roadmap.
 
 ### Sprint 1
-
 - [x] proto Interface
 - [x] proto sync
 - [x] cli api
@@ -17,7 +16,8 @@ Below a todo list in the shape of a roadmap.
 - [x] basic inputs by meta type
 - [x] scrollview for form
 - [x] outline bug
-- [ ] deleting
+- [x] deleting
+- [ ] change edit form title
 - [ ] finish edit v1.0
 - [ ] saving
 
@@ -27,6 +27,9 @@ Below a todo list in the shape of a roadmap.
 - [ ] rename examples
 
 ### Next...
+- [ ] display mandatory
+- [ ] auto size container_view_style to fix edit record content
+- [ ] scroll set container_view_style frame to top again
 - [ ] data time type
 - [ ] relational fields
 - [ ] dynamic user preferences
@@ -36,6 +39,10 @@ Below a todo list in the shape of a roadmap.
 - [ ] Add loading spinners
 - [ ] new resource, abstract classes
 - [ ] move api call to capi class
-
-- [ ] manual data definition yaml file
 - [ ] port and use Exact Online OSX API
+- [ ] outline with sections
+
+### manual data def yaml file
+- [ ] manual data definition yaml file
+- [ ] reorder fields in
+- [ ] hide resources in main menu
