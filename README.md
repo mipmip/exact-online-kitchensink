@@ -28,7 +28,7 @@ Below a todo list in the shape of a roadmap.
 - [x] close on save
 - [x] cancel button
 - [x] update list after saving
-- [ ] bug booleans not working in form
+- [x] Add loading spinners
 
 ### Dynamic resource list
 - [x] rename directories
@@ -36,7 +36,7 @@ Below a todo list in the shape of a roadmap.
 - [ ] rename examples
 
 ### Next...
-- [ ] Add loading spinners
+- [ ] bug booleans not working well in form
 - [ ] bug in projects account should be mandatory
 - [ ] scroll set container_view_style frame to top again
 - [ ] change edit form title

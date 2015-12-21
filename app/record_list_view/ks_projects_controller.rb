@@ -31,6 +31,8 @@ module KitchenSinkExamples
 
     def prepare_views
 
+      @outer_view = @layout.get(:outer_view)
+
       @sync_button = @layout.get(:sync_button)
       @sync_button.target = self
       @sync_button.action = 'sync_exact_data'
@@ -48,7 +50,14 @@ module KitchenSinkExamples
       @edit_button.action = 'edit_record_window'
     end
 
+    def outer_view
+      @outer_view
+    end
+
     def delete_record
+
+      DJProgressHUD.showStatus("talking to Exact", FromView:@outer_view)
+
       record_id = @data[@table_view.selectedRow]['id']
       @task_data3 = NSTask.alloc.init
       @task_data3.setLaunchPath "/Users/pim/RnD/exact-online-kitchensink/bin/eo"
@@ -100,6 +109,9 @@ module KitchenSinkExamples
     end
 
     def sync_exact_data
+
+      DJProgressHUD.showStatus("talking to Exact", FromView:@outer_view)
+
       @task_data = NSTask.alloc.init
 
       @task_data.setLaunchPath "/Users/pim/RnD/exact-online-kitchensink/bin/eo"
@@ -122,9 +134,11 @@ module KitchenSinkExamples
 
       @table_view.reloadData
       NSNotificationCenter.defaultCenter.removeObserver(self, name: NSFileHandleReadToEndOfFileCompletionNotification, object: notification.object)
+      DJProgressHUD.dismiss
     end
 
     def get_record_data(record_id)
+      DJProgressHUD.showStatus("talking to Exact", FromView:@outer_view)
       @task_data2 = NSTask.alloc.init
       @task_data2.setLaunchPath "/Users/pim/RnD/exact-online-kitchensink/bin/eo"
       @task_data2.setCurrentDirectoryPath "/Users/pim/RnD/exact-online-kitchensink"
@@ -150,6 +164,7 @@ module KitchenSinkExamples
 
       record_window BW::JSON.parse(result)
 
+      DJProgressHUD.dismiss
       @record_window_controller.showWindow(self)
       @record_window_controller.window.orderFrontRegardless
     end

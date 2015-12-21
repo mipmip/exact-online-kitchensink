@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rake'
+gem 'motion-cocoapods'
+
 gem 'motion-kit'
 gem 'motion-kit-events'
 gem "bubble-wrap", "~> 1.9.4"

@@ -22,7 +22,9 @@ class RecordWindowController  < NSWindowController
   end
 
   def save_some_record
-    #    p @meta
+
+    DJProgressHUD.showStatus("talking to Exact", FromView: layout.window.contentView)
+
     meta_assoc = {}
     @meta['all_attributes'].each do | attr |
       meta_assoc[attr['name']] = attr
@@ -136,10 +138,10 @@ class RecordWindowController  < NSWindowController
   end
 
   def readCompletedDataSaveAction(notification)
-#    result = notification.userInfo.objectForKey(NSFileHandleNotificationDataItem)
-#    p result
+    DJProgressHUD.dismiss
     close_window
     NSNotificationCenter.defaultCenter.removeObserver(self, name: NSFileHandleReadToEndOfFileCompletionNotification, object: notification.object)
     @parent_object.sync_exact_data
+
   end
 end
