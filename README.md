@@ -17,9 +17,18 @@ Below a todo list in the shape of a roadmap.
 - [x] scrollview for form
 - [x] outline bug
 - [x] deleting
-- [ ] change edit form title
-- [ ] finish edit v1.0
-- [ ] saving
+- [x] display mandatory
+- [x] saving
+
+### Improve edit and new form
+- [x] bug edit more than one record
+- [x] auto size container_view_style to fix edit record content
+- [x] double click to edit
+- [x] add
+- [x] close on save
+- [x] cancel button
+- [x] update list after saving
+- [ ] bug booleans not working in form
 
 ### Dynamic resource list
 - [x] rename directories
@@ -27,19 +36,16 @@ Below a todo list in the shape of a roadmap.
 - [ ] rename examples
 
 ### Next...
-- [ ] open https://start.exactonline.nl/docs/HlpRestAPIResources.aspx in
-  browser
-- [ ] bug edit more than one record
-- [ ] display mandatory
-- [ ] auto size container_view_style to fix edit record content
+- [ ] Add loading spinners
+- [ ] bug in projects account should be mandatory
 - [ ] scroll set container_view_style frame to top again
+- [ ] change edit form title
+- [ ] open https://start.exactonline.nl/docs/HlpRestAPIResources.aspx in browser
 - [ ] data time type
 - [ ] relational fields
 - [ ] dynamic user preferences
 - [ ] show hide fields
-- [ ] add
 - [ ] filter knop
-- [ ] Add loading spinners
 - [ ] new resource, abstract classes
 - [ ] move api call to capi class
 - [ ] port and use Exact Online OSX API

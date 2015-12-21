@@ -17,6 +17,8 @@ module KitchenSinkExamples
       @table_view = @layout.get(:table_view)
       @table_view.delegate = self
       @table_view.dataSource = self
+      @table_view.setTarget(self)
+      @table_view.setDoubleAction('edit_record_window') # double click record to edit
     end
 
     def layout
@@ -28,6 +30,7 @@ module KitchenSinkExamples
     end
 
     def prepare_views
+
       @sync_button = @layout.get(:sync_button)
       @sync_button.target = self
       @sync_button.action = 'sync_exact_data'
@@ -71,7 +74,18 @@ module KitchenSinkExamples
     end
 
     def record_window(record_data=nil)
-      @record_window_controller ||= RecordWindowController.alloc.init_with_meta(@meta, record_data)
+
+      if @record_window_controller && @record_window_controller.window.isVisible
+
+        alert = NSAlert.new
+        alert.messageText = "Can't edit 2 records at the same time"
+        alert.runModal
+
+      else
+        @record_window_controller = nil
+        @record_window_controller ||= RecordWindowController.alloc.init_with_meta(self, @meta, record_data)
+      end
+
     end
 
     def add_record_window
@@ -116,7 +130,6 @@ module KitchenSinkExamples
       @task_data2.setCurrentDirectoryPath "/Users/pim/RnD/exact-online-kitchensink"
       @task_data2.setArguments(['projects', 'jsonlist', '-f', "id=#{record_id}", '-C'])
 
-#      print "\n/Users/pim/RnD/exact-online-kitchensink/bin/eo " + ['projects', 'jsonlist', '-f', "id=#{record_id}", '-C'].join(' ')
       @outputPipe2 = NSPipe.pipe
       @task_data2.setStandardOutput @outputPipe2
 

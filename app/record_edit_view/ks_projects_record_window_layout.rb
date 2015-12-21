@@ -6,18 +6,6 @@ class RecordWindowLayout < MK::WindowLayout
     @record_data = record_data
 
     super()
-    @used_types = ['Edm.String',
-                   'Edm.Boolean',
-                   'Edm.Int16',
-                   'Edm.Int32',
-                   'Edm.Guid',
-                   'Edm.DateTime',
-                   'Edm.Double']
-
-  end
-
-  def used_types
-    @used_types
   end
 
   def layout
@@ -28,6 +16,7 @@ class RecordWindowLayout < MK::WindowLayout
       document_view add NSView, :container_view
     end
     add NSButton, :save_button
+    add NSButton, :cancel_button
   end
 
   def title_view_style
@@ -71,6 +60,16 @@ class RecordWindowLayout < MK::WindowLayout
     end
   end
 
+  def cancel_button_style
+    title "Cancel"
+    constraints do
+      width 100
+      height 20
+      right.equals(:save_button, :left).minus(10)
+      bottom.equals(:superview, :bottom).minus(10)
+    end
+  end
+
   def save_button_style
     title "Save"
     constraints do
@@ -84,21 +83,13 @@ class RecordWindowLayout < MK::WindowLayout
   def container_view_style
 
     frame v.superview.bounds
-    height 3000 # fix auto size to fit content
+    height (@meta['all_attributes'].length * 31) + 30
 
     @last_y_pos = 40
     @meta['all_attributes'].each do | attr |
 
-
-      #      p attr
-      #      if @used_types.include? attr['type'] || attr['foreign_end_point']
-
-      #       if (attr['type']=='Edm.Guid' && attr['foreign_end_point']) || attr['type'] != 'Edm.Guid'
-
       #LABEL
       add NSTextField, "#{attr['name']}_label".to_sym do
-
-      p attr if attr['name']=='ID'
 
       editable false
       selectable false
@@ -124,14 +115,11 @@ class RecordWindowLayout < MK::WindowLayout
         right.equals(:superview, :left).plus(210)
       end
     end
-    #        end
-    #
-    p attr unless attr['type']
 
     case attr['type']
     when 'Edm.Int16', 'Edm.Int32', 'Edm.Double'
       add NSTextField, attr['name'].to_sym do
-        stringValue @record_data[0][ attr['name'].underscore ].to_s
+        stringValue @record_data[0][ attr['name'].underscore ].to_s if @record_data
         tool_tip attr['desc']
         cell do
           alignment NSRightTextAlignment
@@ -146,7 +134,7 @@ class RecordWindowLayout < MK::WindowLayout
     when 'Edm.Guid'
       if attr['foreign_end_point']
         add NSTextField, attr['name'].to_sym do
-          stringValue @record_data[0][ attr['name'].underscore ].to_s
+          stringValue @record_data[0][ attr['name'].underscore ].to_s if @record_data
           tool_tip attr['desc']
           constraints do
             width 300
@@ -173,7 +161,8 @@ class RecordWindowLayout < MK::WindowLayout
           selectable false
           bordered false
 
-          stringValue @record_data[0][ attr['name'].underscore ].to_s
+          stringValue @record_data[0][ attr['name'].underscore ].to_s if @record_data
+
           tool_tip attr['desc']
           constraints do
             width 300
@@ -186,7 +175,8 @@ class RecordWindowLayout < MK::WindowLayout
       end
     when 'Edm.DateTime'
       add NSTextField, attr['name'].to_sym do
-        stringValue @record_data[0][ attr['name'].underscore ].to_s
+        stringValue @record_data[0][ attr['name'].underscore ].to_s if @record_data
+
         tool_tip attr['desc']
         constraints do
           width 200
@@ -207,7 +197,8 @@ class RecordWindowLayout < MK::WindowLayout
 
     when 'Edm.String'
       add NSTextField, attr['name'].to_sym do
-        stringValue @record_data[0][ attr['name'].underscore ].to_s
+        stringValue @record_data[0][ attr['name'].underscore ].to_s if @record_data
+
         tool_tip attr['desc']
         constraints do
           width 400
@@ -218,7 +209,13 @@ class RecordWindowLayout < MK::WindowLayout
       end
     when 'Edm.Boolean'
       add NSButton, attr['name'].to_sym do
-        title @record_data[0][ attr['name'].underscore ].to_s
+        state NSOnState if @record_data && @record_data[0][ attr['name'].underscore ]
+        if @record_data
+          title @record_data[0][ attr['name'].underscore ].to_s
+        else
+          title ''
+        end
+
         button_type NSSwitchButton
         tool_tip attr['desc']
         bezel_style 0
@@ -234,7 +231,8 @@ class RecordWindowLayout < MK::WindowLayout
       #          p "No form handler found for:" + attr['type']
       if attr['foreign_end_point']
         add NSTextField, attr['name'].to_sym do
-          stringValue @record_data[0][ attr['name'].underscore ].to_s
+          stringValue @record_data[0][ attr['name'].underscore ].to_s if @record_data
+
           tool_tip attr['desc']
           constraints do
             width 400

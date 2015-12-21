@@ -3,9 +3,10 @@ class RecordWindowController  < NSWindowController
     @layout ||= RecordWindowLayout.new(@meta, @record_data)
   end
 
-  def init_with_meta(meta, record_data=nil)
+  def init_with_meta(parent_object, meta, record_data=nil)
     @meta = meta
     @record_data = record_data
+    @parent_object = parent_object
     init
   end
 
@@ -14,6 +15,10 @@ class RecordWindowController  < NSWindowController
       self.window = layout.window
       prepare_views
     end
+  end
+
+  def close_window
+    layout.window.close
   end
 
   def save_some_record
@@ -61,7 +66,11 @@ class RecordWindowController  < NSWindowController
 
     end
 
-    save_exact_data(@record_data[0]['id'], data_to_save)
+    if(@record_data)
+      update_exact_data(@record_data[0]['id'], data_to_save)
+    else
+      new_exact_data(data_to_save)
+    end
 
   end
 
@@ -75,6 +84,11 @@ class RecordWindowController  < NSWindowController
     @save_button = @layout.get(:save_button)
     @save_button.target = self
     @save_button.action = 'save_some_record'
+
+    @cancel_button = @layout.get(:cancel_button)
+    @cancel_button.target = self
+    @cancel_button.action = 'close_window'
+
     @field_outlets = {}
 
     @meta['all_attributes'].each do | attr |
@@ -83,7 +97,26 @@ class RecordWindowController  < NSWindowController
 
   end
 
-  def save_exact_data(id,data)
+  def new_exact_data(data)
+    @task_data = NSTask.alloc.init
+
+    @task_data.setLaunchPath "/Users/pim/RnD/exact-online-kitchensink/bin/eo"
+    @task_data.setCurrentDirectoryPath "/Users/pim/RnD/exact-online-kitchensink"
+    args = ['projects', 'add_with_json', BW::JSON.generate([data])]
+    print args.join(' ')
+    @task_data.setArguments(args)
+
+    @outputPipe = NSPipe.pipe
+    @task_data.setStandardOutput @outputPipe
+
+    @notification_center = NSNotificationCenter.defaultCenter
+    @notification_center.addObserver(self, selector:'readCompletedDataSaveAction:', name:NSFileHandleReadToEndOfFileCompletionNotification, object:@outputPipe.fileHandleForReading)
+
+    @outputPipe.fileHandleForReading.readToEndOfFileInBackgroundAndNotify
+    @task_data.launch
+  end
+
+  def update_exact_data(id,data)
     @task_data = NSTask.alloc.init
 
     @task_data.setLaunchPath "/Users/pim/RnD/exact-online-kitchensink/bin/eo"
@@ -103,8 +136,10 @@ class RecordWindowController  < NSWindowController
   end
 
   def readCompletedDataSaveAction(notification)
-    result = notification.userInfo.objectForKey(NSFileHandleNotificationDataItem)
-    p result
+#    result = notification.userInfo.objectForKey(NSFileHandleNotificationDataItem)
+#    p result
+    close_window
     NSNotificationCenter.defaultCenter.removeObserver(self, name: NSFileHandleReadToEndOfFileCompletionNotification, object: notification.object)
+    @parent_object.sync_exact_data
   end
 end
