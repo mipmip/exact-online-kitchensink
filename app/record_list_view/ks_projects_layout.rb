@@ -89,6 +89,13 @@ class KitchenSinkProjectLayout < MK::Layout
 
     autoresizing_mask NSViewWidthSizable | NSViewHeightSizable
 
+    add_column('id') do
+      title 'ID'
+      min_width 102
+      width 270
+      resizing_mask NSTableColumnUserResizingMask
+    end
+
     add_column('code') do
       title 'Code'
       min_width 102

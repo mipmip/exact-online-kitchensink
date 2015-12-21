@@ -27,6 +27,9 @@ Below a todo list in the shape of a roadmap.
 - [ ] rename examples
 
 ### Next...
+- [ ] open https://start.exactonline.nl/docs/HlpRestAPIResources.aspx in
+  browser
+- [ ] bug edit more than one record
 - [ ] display mandatory
 - [ ] auto size container_view_style to fix edit record content
 - [ ] scroll set container_view_style frame to top again

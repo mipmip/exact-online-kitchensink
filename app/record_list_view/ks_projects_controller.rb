@@ -116,7 +116,7 @@ module KitchenSinkExamples
       @task_data2.setCurrentDirectoryPath "/Users/pim/RnD/exact-online-kitchensink"
       @task_data2.setArguments(['projects', 'jsonlist', '-f', "id=#{record_id}", '-C'])
 
-      print "\n/Users/pim/RnD/exact-online-kitchensink/bin/eo " + ['projects', 'jsonlist', '-f', "id=#{record_id}", '-C'].join(' ')
+#      print "\n/Users/pim/RnD/exact-online-kitchensink/bin/eo " + ['projects', 'jsonlist', '-f', "id=#{record_id}", '-C'].join(' ')
       @outputPipe2 = NSPipe.pipe
       @task_data2.setStandardOutput @outputPipe2
 
@@ -156,6 +156,8 @@ module KitchenSinkExamples
       row = @data[row]
 
       case column.identifier
+      when 'id'
+        text_field.stringValue = row[:id]
       when 'code'
         text_field.stringValue = row[:code]
       when 'description'

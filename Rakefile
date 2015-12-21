@@ -14,8 +14,8 @@ Motion::Project::App.setup do |app|
   app.name = 'Exact Online Kitchensink OS X'
 end
 
-desc 'gen_resources: generate all resource classes'
-task :gen_resources do
+desc 'gen_apidatafile: generate api data file from exact online rest reference'
+task :gen_apidatafile do
 
   require "exact_online_apidoc_parser"
   require "json"
