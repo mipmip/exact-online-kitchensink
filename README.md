@@ -30,26 +30,31 @@ Below a todo list in the shape of a roadmap.
 - [x] update list after saving
 - [x] Add loading spinners
 
+### Last CRUD prototype functionality
+- [x] filter knop
+- [ ] dynamic user preferences
+- [ ] show/hide fields
+- [ ] search in all string fields
+
 ### Dynamic resource list
 - [x] rename directories
 - [ ] refactor remove all projects in files and classes
 - [ ] rename examples
 
 ### Next...
+- [ ] bug resizing right edge doesnt resize table view
 - [ ] bug booleans not working well in form
 - [ ] bug in projects account should be mandatory
 - [ ] scroll set container_view_style frame to top again
-- [ ] change edit form title
 - [ ] open https://start.exactonline.nl/docs/HlpRestAPIResources.aspx in browser
 - [ ] data time type
 - [ ] relational fields
-- [ ] dynamic user preferences
-- [ ] show hide fields
-- [ ] filter knop
+- [ ] change edit form title
 - [ ] new resource, abstract classes
 - [ ] move api call to capi class
-- [ ] port and use Exact Online OSX API
 - [ ] outline with sections
+- [ ] port and use Exact Online OSX API
+- [ ] caching mechanism
 
 ### manual data def yaml file
 - [ ] manual data definition yaml file
