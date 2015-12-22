@@ -21,10 +21,7 @@ class MainWindowController < NSWindowController
   end
 
   def build_navigation
-#    children = []
     @instances = {}
-
-    #@visible_resources = ['Projects', 'TimeTransactions', 'Accounts']
 
     tree = NSApplication.sharedApplication.delegate.api_meta
 
@@ -37,20 +34,16 @@ class MainWindowController < NSWindowController
       @instances[k] = ListViewController.new(k)
       services[v['service']]['Children'] << @instances[k].object_entry
     end
-#    p tree
 
     services_tree = []
     services.each do |k,v|
       services_tree << v
     end
 
-
     @displayItem = {
       "Title" => 'Exact Online Resources',
       "Children" => services_tree
     }
-
-    p @displayItem
 
   end
 

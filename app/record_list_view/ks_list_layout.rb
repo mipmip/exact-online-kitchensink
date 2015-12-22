@@ -2,10 +2,13 @@ class ListViewLayout < MK::Layout
   def initialize(meta)
     @meta = meta
 
+    load_prefs
+    super()
+  end
+
+  def load_prefs
     defaults = NSUserDefaults.standardUserDefaults
     @showhide_arr = defaults.objectForKey("showhide_#{@meta['end_point']}")
-
-    super()
   end
 
   def layout
@@ -34,6 +37,10 @@ class ListViewLayout < MK::Layout
       add NSScrollView, :scroll_view
 
       add NSButton, :add_button do
+        unless @meta['supported_methods'].include? 'POST'
+          enabled false
+        end
+
         title "Add"
         constraints do
           width 100
@@ -43,6 +50,9 @@ class ListViewLayout < MK::Layout
       end
 
       add NSButton, :delete_button do
+        unless @meta['supported_methods'].include? 'DELETE'
+          enabled false
+        end
         title "Delete"
         constraints do
           width 100
@@ -52,6 +62,9 @@ class ListViewLayout < MK::Layout
       end
 
       add NSButton, :edit_button do
+        unless @meta['supported_methods'].include? 'POST'
+          enabled false
+        end
         title "Edit"
         constraints do
           width 100
@@ -98,6 +111,7 @@ class ListViewLayout < MK::Layout
         document_view add NSTableView, :table_view
   end
 
+
   def table_view_style
 
     uses_alternating_row_background_colors true
@@ -113,13 +127,13 @@ class ListViewLayout < MK::Layout
     end
 
     @showhide_arr.each do |k, v|
-      if v
-        add_column(k) do
-          title k.tr("_", " ").capitalize
-          min_width 100
-          width 300
-          resizing_mask NSTableColumnUserResizingMask
-        end
+      add_column(k) do
+        hidden true unless v
+        title k.tr("_", " ").capitalize
+        min_width 100
+        width 300
+        resizing_mask NSTableColumnUserResizingMask
+
       end
     end
 

@@ -66,7 +66,8 @@ class ShowHidePrefsWindowController  < NSWindowController
     defaults.setObject(data_to_save,forKey: "showhide_#{@meta['end_point']}")
 
     close_window
-    @parent_object.sync_exact_data
+
+    @parent_object.reinit_table_columns
 
   end
 end

@@ -21,6 +21,19 @@ class ListViewController
     @table_view.setDoubleAction('edit_record_window') # double click record to edit
   end
 
+  def reinit_table_columns
+    defaults = NSUserDefaults.standardUserDefaults
+    @showhide_arr = defaults.objectForKey("showhide_#{@meta['end_point']}")
+
+    @table_view.tableColumns.each do | t |
+      if @showhide_arr[t.identifier.tr(' ','_').downcase]
+        t.setHidden false
+      else
+        t.setHidden true
+      end
+    end
+  end
+
   def init_sync
     unless @sync_done
       sync_exact_data
@@ -230,6 +243,7 @@ class ListViewController
   end
 
   def tableView(table_view, viewForTableColumn: column, row: row)
+
     text_field = table_view.makeViewWithIdentifier(column.identifier, owner: self)
 
     unless text_field
@@ -252,4 +266,11 @@ class ListViewController
 
   def tableViewColumnDidResize(notification)
   end
+
+#  def tableView(table_view, dataCellForTableColumn: column, row: row)
+#    cell = column.dataCell
+#    cell.setFont(NSFont.systemFontOfSize(8))
+#    cell.setTextColor(NSColor.lightGrayColor)
+#    cell
+#  end
 end

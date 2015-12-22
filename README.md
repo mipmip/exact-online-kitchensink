@@ -43,9 +43,15 @@ Below a todo list in the shape of a roadmap.
 - [x] outline with sections
 - [x] new resource, abstract classes
 
+### New refinements
+- [x] saving show/hide should reload table columns
+- [x] show edit save buttons only when allowed
+
 ### Next...
 - [ ] port and use Exact Online OSX API
-- [ ] saving show/hide should reload table columns
+- [ ] table better display long texts
+- [ ] table smaller font
+- [ ] sommige objecten werken niet, bijv ./bin/eo job_titles attributes
 - [ ] bug resizing right edge doesnt resize table view
 - [ ] bug booleans not working well in form
 - [ ] bug in projects account should be mandatory
