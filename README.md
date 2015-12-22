@@ -38,26 +38,27 @@ Below a todo list in the shape of a roadmap.
 
 ### Dynamic resource list
 - [x] rename directories
-- [ ] refactor remove all projects in files and classes
-- [ ] rename examples
+- [x] refactor remove all projects in files and classes
+- [x] rename examples
+- [x] outline with sections
+- [x] new resource, abstract classes
 
 ### Next...
+- [ ] port and use Exact Online OSX API
 - [ ] saving show/hide should reload table columns
 - [ ] bug resizing right edge doesnt resize table view
 - [ ] bug booleans not working well in form
 - [ ] bug in projects account should be mandatory
+- [ ] outline crashes when collapsing again
 - [ ] scroll set container_view_style frame to top again
 - [ ] open https://start.exactonline.nl/docs/HlpRestAPIResources.aspx in browser
 - [ ] data time type
 - [ ] relational fields
 - [ ] change edit form title
-- [ ] new resource, abstract classes
 - [ ] move api call to capi class
-- [ ] outline with sections
-- [ ] port and use Exact Online OSX API
 - [ ] caching mechanism
 
 ### manual data def yaml file
 - [ ] manual data definition yaml file
-- [ ] reorder fields in
+- [ ] reorder fields in form
 - [ ] hide resources in main menu

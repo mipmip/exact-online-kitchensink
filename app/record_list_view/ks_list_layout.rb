@@ -1,4 +1,4 @@
-class KitchenSinkProjectLayout < MK::Layout
+class ListViewLayout < MK::Layout
   def initialize(meta)
     @meta = meta
 

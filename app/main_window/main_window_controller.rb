@@ -21,19 +21,36 @@ class MainWindowController < NSWindowController
   end
 
   def build_navigation
-    children = []
+#    children = []
     @instances = {}
-    KitchenSinkExamples.constants.each do |c|
-      if c.to_s.start_with? 'KitchenSink' and c.to_s.include? 'Controller'
-        @instances[KitchenSinkExamples::const_get(c.to_s)] = KitchenSinkExamples::const_get(c.to_s).new
-        children << @instances[KitchenSinkExamples::const_get(c.to_s)].object_entry
-      end
+
+    #@visible_resources = ['Projects', 'TimeTransactions', 'Accounts']
+
+    tree = NSApplication.sharedApplication.delegate.api_meta
+
+    services = {}
+    tree.each do  | k,v |
+      services[v['service']] = {'Title'=> v['service'], 'Children' => []}
     end
+
+    tree.each do  | k,v |
+      @instances[k] = ListViewController.new(k)
+      services[v['service']]['Children'] << @instances[k].object_entry
+    end
+#    p tree
+
+    services_tree = []
+    services.each do |k,v|
+      services_tree << v
+    end
+
 
     @displayItem = {
       "Title" => 'Exact Online Resources',
-      "Children" => children
+      "Children" => services_tree
     }
+
+    p @displayItem
 
   end
 
@@ -51,6 +68,7 @@ class MainWindowController < NSWindowController
       selected_item['subview'].setFrame right_view.bounds
 
       @layout.set_right_sub_view selected_item['subview']
+      @instances[selected_item['EndPoint']].init_sync
     end
   end
 
