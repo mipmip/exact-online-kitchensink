@@ -32,9 +32,9 @@ Below a todo list in the shape of a roadmap.
 
 ### Last CRUD prototype functionality
 - [x] filter knop
-- [ ] dynamic user preferences
-- [ ] show/hide fields
-- [ ] search in all string fields
+- [x] dynamic user preferences
+- [x] show/hide fields
+- [x] search in all string fields
 
 ### Dynamic resource list
 - [x] rename directories
@@ -42,6 +42,7 @@ Below a todo list in the shape of a roadmap.
 - [ ] rename examples
 
 ### Next...
+- [ ] saving show/hide should reload table columns
 - [ ] bug resizing right edge doesnt resize table view
 - [ ] bug booleans not working well in form
 - [ ] bug in projects account should be mandatory
